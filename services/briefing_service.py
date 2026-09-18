@@ -14,29 +14,36 @@ def generate_operations_briefing():
     emerging = [inc for inc in incidents if inc.get("severity") == "Emerging"]
     normal = [inc for inc in incidents if inc.get("severity") == "Normal"]
 
+    high_pressure.sort(key=lambda x: x.get("pressure_score", 0), reverse=True)
+    emerging.sort(key=lambda x: x.get("pressure_score", 0), reverse=True)
+
     today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     # Construct deterministic summary narrative
     bullet_points = []
     
     if high_pressure:
-        for inc in high_pressure:
+        for inc in high_pressure[:3]:
             bullet_points.append(
                 f"[CRITICAL ESCALATION] Incident {inc.get('incident_id')} ({inc.get('category')} in {inc.get('representative_area')}): "
                 f"Pressure score reached {inc.get('pressure_score')}/100 with {inc.get('complaint_count')} reports "
                 f"({inc.get('unresolved_count')} unresolved). Spike detected at {inc.get('spike_pct')}% above baseline "
                 f"(z-score: {inc.get('z_score')}). Immediate dispatch recommended."
             )
+        if len(high_pressure) > 3:
+            bullet_points.append(f"...and {len(high_pressure) - 3} other high-pressure incidents auto-escalated.")
     else:
         bullet_points.append("No incidents currently meeting high-pressure auto-escalation criteria.")
 
     if emerging:
-        for inc in emerging:
+        for inc in emerging[:3]:
             bullet_points.append(
                 f"[MONITORING] Emerging incident {inc.get('incident_id')} ({inc.get('category')} in {inc.get('representative_area')}): "
                 f"Pressure score {inc.get('pressure_score')}/100, volume {inc.get('current')} reports vs baseline {inc.get('baseline')} "
                 f"({inc.get('spike_pct')}% increase)."
             )
+        if len(emerging) > 3:
+            bullet_points.append(f"...and {len(emerging) - 3} other emerging incidents under active monitoring.")
 
     bullet_points.append(
         f"[SYSTEM TOTALS] {metrics['total_complaints']} total complaints logged across {metrics['active_incidents']} active incidents "

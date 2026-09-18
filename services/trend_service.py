@@ -1,5 +1,6 @@
 from collections import defaultdict
 from services.complaint_service import get_all_complaints
+import dateutil.parser
 
 
 def get_trends():
@@ -17,8 +18,17 @@ def get_trends():
 
     for c in complaints:
         ts = c.get("timestamp", "")
-        # Extract YYYY-MM-DD
-        date_key = ts[:10] if len(ts) >= 10 else "Unknown"
+        # Robustly extract YYYY-MM-DD
+        try:
+            parsed_date = dateutil.parser.isoparse(ts)
+            date_key = parsed_date.strftime("%Y-%m-%d")
+        except Exception:
+            try:
+                parsed_date = dateutil.parser.parse(ts)
+                date_key = parsed_date.strftime("%Y-%m-%d")
+            except Exception:
+                date_key = "Unknown"
+
         cat = c.get("category", "Other")
         loc = c.get("locality", "Unknown")
 

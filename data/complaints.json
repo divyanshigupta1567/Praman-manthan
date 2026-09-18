@@ -214,5 +214,17 @@
     "locality": "Area A",
     "timestamp": "2026-09-18T03:37:38.259607Z",
     "status": "unresolved"
+  },
+  {
+    "complaint_id": "C0019",
+    "complaint_text": "Massive overflow of garbage at market street causing bad odor",
+    "category": "Garbage",
+    "predicted_category": "Garbage",
+    "confidence": 0.9,
+    "latitude": 12.973,
+    "longitude": 77.596,
+    "locality": "Area A",
+    "timestamp": "2026-09-18T03:43:14.580973Z",
+    "status": "unresolved"
   }
 ]

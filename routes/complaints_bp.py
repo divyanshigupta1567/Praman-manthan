@@ -29,5 +29,15 @@ def submit_complaint():
     if not complaint_text:
         return jsonify({"error": "complaint_text is required"}), 400
 
+    try:
+        lat = float(data.get("latitude"))
+        lng = float(data.get("longitude"))
+        if not (-90 <= lat <= 90):
+            raise ValueError("Latitude must be between -90 and 90")
+        if not (-180 <= lng <= 180):
+            raise ValueError("Longitude must be between -180 and 180")
+    except (TypeError, ValueError) as e:
+        return jsonify({"error": f"Invalid or missing coordinates: {str(e)}"}), 400
+
     new_complaint = create_complaint(data)
     return jsonify(new_complaint), 201

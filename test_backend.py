@@ -108,7 +108,7 @@ def run_tests():
     res = client.post("/api/complaints", data=json.dumps(post_payload), content_type="application/json")
     assert_test("POST /api/complaints returns 201 Created", res.status_code == 201)
     new_c = res.get_json()
-    assert_test("POST generates valid complaint_id", "complaint_id" in new_c and new_c["complaint_id"].startswith("C"))
+    assert_test("POST generates valid complaint_id", "complaint_id" in new_c and (new_c["complaint_id"].startswith("C") or new_c["complaint_id"].startswith("PRM-")))
     assert_test("POST returns predicted_category and confidence",
                 "predicted_category" in new_c and "confidence" in new_c)
     assert_test("POST assigns unresolved status", new_c.get("status") == "unresolved")

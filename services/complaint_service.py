@@ -1,20 +1,59 @@
 import json
 import os
+import threading
 from datetime import datetime, timezone
+import pandas as pd
 
-DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "complaints.json")
+CSV_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "complaints.csv")
+DATA_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "runtime_complaints.json")
 
-# In-memory storage seeded from JSON
+# In-memory storage seeded from CSV/JSON
 _complaints = []
+_lock = threading.Lock()
 
 
 def _load_complaints():
     global _complaints
+    
+    # Try to load existing runtime changes first
     if os.path.exists(DATA_PATH):
         try:
             with open(DATA_PATH, "r", encoding="utf-8") as f:
                 _complaints = json.load(f)
+                if _complaints:
+                    return
         except Exception:
+            pass
+
+    # Fallback to initial mock dataset (complaints.csv)
+    if os.path.exists(CSV_PATH):
+        try:
+            df = pd.read_csv(CSV_PATH)
+            _complaints = []
+            for _, row in df.iterrows():
+                text = str(row.get("complaint_text", ""))
+                pred_cat, conf = predict_category_placeholder(text)
+                # Parse timestamp slightly defensively to standard ISO
+                ts_raw = str(row.get("timestamp", ""))
+                try:
+                    ts = ts_raw.replace(" ", "T") + "Z" if "T" not in ts_raw else ts_raw
+                except:
+                    ts = ts_raw
+
+                _complaints.append({
+                    "complaint_id": str(row.get("complaint_id", "")),
+                    "complaint_text": text,
+                    "category": str(row.get("category", "")),
+                    "predicted_category": pred_cat,
+                    "confidence": conf,
+                    "latitude": float(row.get("latitude", 0.0)),
+                    "longitude": float(row.get("longitude", 0.0)),
+                    "locality": str(row.get("locality", "")),
+                    "timestamp": ts,
+                    "status": str(row.get("status", "unresolved"))
+                })
+        except Exception as e:
+            print(f"Error loading CSV: {e}")
             _complaints = []
     else:
         _complaints = []
@@ -80,37 +119,41 @@ def create_complaint(payload):
 
     locality = payload.get("locality", "Area A").strip() or "Area A"
 
-    # Generate sequential ID (e.g. C0018)
-    existing_nums = []
-    for c in _complaints:
-        cid = c.get("complaint_id", "")
-        if cid.startswith("C") and cid[1:].isdigit():
-            existing_nums.append(int(cid[1:]))
-    next_id_num = max(existing_nums, default=0) + 1
-    new_id = f"C{next_id_num:04d}"
+    # Thread-safe ID generation and appending
+    with _lock:
+        existing_nums = []
+        for c in _complaints:
+            cid = c.get("complaint_id", "")
+            if cid.startswith("PRM-") and cid[4:].isdigit():
+                existing_nums.append(int(cid[4:]))
+            elif cid.startswith("C") and cid[1:].isdigit():
+                existing_nums.append(int(cid[1:]))
+                
+        next_id_num = max(existing_nums, default=0) + 1
+        new_id = f"PRM-{next_id_num:04d}"
 
-    predicted_cat, conf = predict_category_placeholder(complaint_text)
+        predicted_cat, conf = predict_category_placeholder(complaint_text)
 
-    new_complaint = {
-        "complaint_id": new_id,
-        "complaint_text": complaint_text,
-        "category": predicted_cat,
-        "predicted_category": predicted_cat,
-        "confidence": conf,
-        "latitude": latitude,
-        "longitude": longitude,
-        "locality": locality,
-        "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-        "status": "unresolved"
-    }
+        new_complaint = {
+            "complaint_id": new_id,
+            "complaint_text": complaint_text,
+            "category": predicted_cat,
+            "predicted_category": predicted_cat,
+            "confidence": conf,
+            "latitude": latitude,
+            "longitude": longitude,
+            "locality": locality,
+            "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "status": "unresolved"
+        }
 
-    _complaints.append(new_complaint)
+        _complaints.append(new_complaint)
 
-    # Persist back to JSON file
-    try:
-        with open(DATA_PATH, "w", encoding="utf-8") as f:
-            json.dump(_complaints, f, indent=2)
-    except Exception:
-        pass
+        # Persist back to runtime JSON file
+        try:
+            with open(DATA_PATH, "w", encoding="utf-8") as f:
+                json.dump(_complaints, f, indent=2)
+        except Exception:
+            pass
 
     return new_complaint

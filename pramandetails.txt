@@ -1,0 +1,187 @@
+PRAMAN
+Civic Incident Intelligence Platform — Build Plan & Working Guide
+GLAML Manthan 4.0 · Track 4: Public Services & Civic Tech · PS #19 · 5 Members · 8-Hour MVP
+1. How Praman Works
+Praman turns individual citizen complaints into an early-warning picture of what's happening across a city. A single
+complaint about a pothole doesn't tell you much on its own — but twelve similar complaints from the same
+neighbourhood in three days does. Praman's job is to notice that automatically.
+The pipeline, stage by stage:
+1. Citizen submits a complaint — A short description, a location (map pin or manual lat/lng), and an optional photo. No category
+selection needed — the system predicts it.
+2. AI Classification — The complaint text is run through a trained classifier that predicts one of six categories (Pothole, Garbage,
+Water Leakage, Streetlight, Sewage, Traffic Hazard) with a confidence score.
+3. Text Similarity — The complaint is compared against other recent complaints in the same category using TF-IDF + cosine
+similarity, to see if it describes something already reported.
+4. Geographic Proximity — Haversine distance checks which nearby complaints (within ~1-2 km) could plausibly be the same
+real-world issue.
+5. Incident Clustering — Complaints that are similar in category, text, location, and time get grouped into a single incident — the
+shift from counting complaints to recognising a pattern.
+6. Time Aggregation & Spike Detection — Daily complaint volume per category/area is compared against a rolling baseline. A
+statistically unusual jump (z-score) marks an incident as emerging.
+7. Pressure Score — Each incident gets a 0-100 score combining how sharp the spike is, how large the cluster is, how long it's
+been active, and how much of it remains unresolved.
+8. Auto-Escalation — Incidents crossing a high-pressure threshold are automatically flagged at the top of the dashboard — no
+one has to notice manually.
+9. Authority Dashboard — The civic team sees KPIs, a map of hotspots, evidence for every flagged incident, and a daily briefing
+generated purely from the computed numbers above.
+The core distinction that makes this work: a complaint is one citizen's report; an incident is a pattern discovered
+across many complaints. Twenty-five complaints might resolve into four separate incidents once similarity, location, and
+time are considered — that's the actual intelligence layer, not just a filtered list.
+2. Phase-Wise Build Plan
+Eight hours, six phases. Every phase ends with something runnable — not a half-finished file.
+Phase Time Focus Exit criteria
+0 0:00–0:20 Kickoff & contract
+lock
+Everyone agrees on the shared data schema (complaint, incident,
+intelligence objects) before writing code.
+1 0:20–2:00 Foundations Synthetic dataset generated with seeded spikes & duplicates. Classifier
+trained with real metrics.
+2 2:00–4:00 Core intelligence Similarity + clustering pipeline produces incident objects. Spike detection &
+Pressure Score compute on real clusters.
+3 4:00–4:20 Sync checkpoint Every module's output validated against the shared schema using
+sample/stub data — mismatches fixed now, not at 7:00.
+4 4:20–6:00 Integration Backend serves real API responses from the ML outputs. Frontend renders
+dashboard against the live API, not mock data.
+5 6:00–7:15 Feature completion Map view, evidence panel, auto-escalation banner, trend chart, and daily
+briefing all wired end-to-end.
+6 7:15–8:00 Polish &
+submission
+README, AI_USAGE_LOG.md, demo run-through, repo cleanup.
+3. Person-Wise Responsibilities
+Five roles, mapped to the five pipeline stages. Each block below is that person's full-day plan.
+Member 1 — ML & Dataset
+Deliverable: Synthetic dataset + trained classifier + real evaluation metrics
+0:20–1:30 Build scripts/generate_data.py: 500-1000 complaints, 6 categories, ~6-10 generic areas, fixed random
+seed, 2-3 scripted spikes, 15-20 seeded near-duplicates.
+1:30–3:00 Build ml/classifier.py: TF-IDF + Logistic Regression baseline, Linear SVM as comparison. Train/test split,
+compute real Accuracy/Precision/Recall/F1 — never hardcode.
+3:00–4:00 Attach predicted_category + confidence to every complaint record per the shared schema. Expose model
+metrics for GET /api/model-metrics.
+4:00–4:20 Sync checkpoint: confirm dataset + classifier output matches schema exactly.
+4:20–6:00 Support integration — fix data issues Backend/Clustering hit against the real dataset.
+6:00–7:15 Help wire GET /api/model-metrics into the dashboard; assist with daily briefing data if time allows.
+Member 2 — Incident Intelligence
+Deliverable: Aggregation, baseline, spike detection, Pressure Score
+0:20–2:00 Build ml/anomaly.py: Pandas time-window aggregation by category + locality + day; rolling 7-day mean/std;
+z-score with insufficient-history and zero-std handling.
+2:00–3:15 Build ml/pressure.py: normalize Spike Magnitude / Cluster Size / Duration / Unresolved Ratio to 0-100
+each; combine with 40/30/20/10 weights into final Pressure Score.
+3:15–4:00 Apply severity bands (Normal / Emerging / High Pressure) and auto-escalation flag. Attach spike_pct with
+safe baseline=0 handling.
+4:00–4:20 Sync checkpoint: confirm intelligence object matches schema exactly.
+4:20–6:00 Wire intelligence output into Backend's incident responses; verify numbers against the seeded spikes
+actually fire correctly.
+6:00–7:15 Build the daily briefing template (deterministic, from computed fields only) with Backend/Frontend.
+Member 3 — Clustering
+Deliverable: Text similarity, Haversine distance, incident clustering
+0:20–1:30 Build ml/similarity.py: TF-IDF + cosine similarity within category; apply thresholds (≥0.85 Potential
+Duplicate, 0.55-0.85 Potentially Related).
+1:30–2:15 Implement Haversine distance function; default 2 km radius (configurable 1-2 km).
+2:15–4:00 Build ml/clustering.py: graph edges where category matches + similarity ≥0.55 + distance ≤ radius +
+timestamps within 72h; connected-components; clusters need ≥3 complaints; compute centroid + radius.
+4:00–4:20 Sync checkpoint: confirm incident cluster object matches schema exactly, test against stub data.
+4:20–6:00 Debug clustering against the real seeded dataset — confirm scripted spikes actually form clusters; tune
+thresholds if too strict/loose.
+6:00–7:15 Support evidence panel data (which complaints belong to which incident) with Backend/Frontend.
+Member 4 — Backend
+Deliverable: Flask APIs connecting all ML outputs
+0:20–1:00 Scaffold Flask app; agree on endpoint list: /api/complaints, /api/incidents, /api/metrics, /api/hotspots,
+/api/trends, /api/briefing, /api/model-metrics, POST /api/complaints.
+1:00–4:00 Build endpoint stubs returning schema-shaped sample JSON so Frontend can start immediately without
+waiting on ML modules.
+4:00–4:20 Sync checkpoint: confirm stub responses match the real schema being produced by Members 1-3.
+4:20–6:00 Swap stubs for real ML/clustering/intelligence outputs as each module lands. Wire POST /api/complaints to
+run classification on submit.
+6:00–7:15 Implement /api/hotspots, /api/trends, /api/briefing fully; support auto-escalation status in responses.
+7:15–8:00 Own README.md + requirements.txt; help finalize AI_USAGE_LOG.md.
+Member 5 — Frontend
+Deliverable: React dashboard, Leaflet map, charts, evidence panel
+0:20–1:00 Scaffold React app; lay out dashboard skeleton: KPI row (Total Complaints, Active Incidents, Emerging,
+Auto-Escalated), map + emerging-incidents list, trend chart + briefing below.
+1:00–4:00 Build citizen complaint form (description, geolocation/manual lat-lng, optional photo) against Backend's stub
+endpoints.
+4:00–4:20 Sync checkpoint: confirm the frontend renders correctly against Backend's stub schema before real data
+arrives.
+4:20–6:00 Build Leaflet map with green/yellow/red hotspot markers; wire to real /api/hotspots once available.
+6:00–7:15 Build evidence panel (per-incident drill-down) and trend chart (Recharts/Plotly); wire auto-escalation banner
+and daily briefing display.
+7:15–8:00 Final UI pass for the '10-second understandability' goal; rehearse the demo click-through.
+4. Starter Prompts — Role-Wise
+Copy the relevant block into your AI coding assistant to kick off your module. Each one assumes the shared schema
+below is fixed first — paste the schema alongside the prompt if your assistant hasn't seen it yet.
+Member 1 — ML & Dataset
+I'm building the ML module for a civic incident-intelligence hackathon project (Praman).
+Task 1 — scripts/generate_data.py:
+Generate 500-1000 synthetic citizen complaints as CSV with columns:
+complaint_id, complaint_text, category, latitude, longitude, locality, timestamp, status.
+Categories: Pothole, Garbage, Water Leakage, Streetlight, Sewage, Traffic Hazard.
+Use 6-10 generic area names (Area A, Area B, ...). Spread timestamps over 4-6 weeks.
+Use a fixed random seed. Write 4-6 text templates per category with slot variables for
+natural variation. Deliberately seed 2-3 scripted spikes (one category+area+3-day window
+gets 4-6x normal volume) and 15-20 near-duplicate complaints (same locality, close
+timestamps, minor wording changes).
+Task 2 — ml/classifier.py:
+Train a TF-IDF + Logistic Regression classifier on complaint_text -> category, with a
+Linear SVM as a comparison model. Do a train/test split and compute real Accuracy,
+Precision, Recall, F1 (no hardcoded numbers). Output predicted_category + confidence
+per complaint, plus a metrics dict for both models.
+Member 2 — Incident Intelligence
+I'm building the spike-detection and scoring module for a civic hackathon project (Praman).
+Input: a list of incident cluster objects, each with complaint_count per day, first_seen,
+last_seen, and unresolved_count (schema attached).
+Task 1 — ml/anomaly.py:
+For each category+locality, compute a rolling 7-day mean and std of daily complaint volume.
+Compute z = (current - rolling_mean) / rolling_std. If fewer than 5 prior days exist, mark
+insufficient_history=true instead of computing z. If rolling_std == 0, set z=0 when current
+equals baseline, else cap z at 3. Compute spike_pct = ((current-baseline)/baseline)*100,
+returning 'N/A (new activity)' if baseline == 0.
+Task 2 — ml/pressure.py:
+Normalize to 0-100: spike = min(100, z/3*100), size = min(100, complaint_count/30*100),
+duration = min(100, hours_since_first_seen/72*100), unresolved = unresolved_count/
+complaint_count*100. Combine as 0.4*spike + 0.3*size + 0.2*duration + 0.1*unresolved.
+Apply bands: 0-59 Normal, 60-79 Emerging, 80-100 High Pressure (auto_escalated=true).
+Member 3 — Clustering
+I'm building the incident-clustering module for a civic hackathon project (Praman).
+Input: a list of complaints, each with complaint_text, category, latitude, longitude,
+timestamp (schema attached).
+Task 1 — ml/similarity.py:
+Compute TF-IDF + cosine similarity between complaints within the same category.
+Label pairs >=0.85 as 'Potential Duplicate', 0.55-0.85 as 'Potentially Related',
+below 0.55 as unrelated.
+Task 2 — Haversine distance function between two lat/lng points in km.
+Task 3 — ml/clustering.py:
+Build a graph per category: an edge between two complaints exists if similarity >= 0.55,
+Haversine distance <= 2 km, and timestamps are within 72 hours of each other. Run
+connected-components (networkx or manual union-find). Keep components with >=3 complaints
+as incident clusters. Compute centroid (mean lat/lng), cluster_radius_km (max distance to
+centroid), complaint_count, similar_complaint_count, unresolved_count, first_seen, last_seen.
+Output objects matching the incident cluster schema exactly.
+Member 4 — Backend
+I'm building the Flask backend for a civic hackathon project (Praman) with 5 ML modules
+developed in parallel by teammates. I need to move fast without blocking on their code.
+Task 1: Scaffold a Flask app with these endpoints, each initially returning realistic
+sample JSON matching this schema (paste schema): GET /api/complaints, GET /api/incidents,
+GET /api/metrics, GET /api/hotspots, GET /api/trends, GET /api/briefing,
+GET /api/model-metrics, POST /api/complaints.
+Task 2: POST /api/complaints should accept {complaint_text, latitude, longitude} minimum,
+generate a complaint_id, and return it along with a placeholder predicted_category until
+the real classifier is wired in.
+Task 3: Structure the code so swapping the sample-JSON stubs for real ML module outputs
+(from teammates' classifier.py / clustering.py / anomaly.py / pressure.py) later requires
+changing only the data-loading layer, not the route handlers.
+Member 5 — Frontend
+I'm building the React dashboard for a civic hackathon project (Praman). It needs to be
+understandable within about 10 seconds by a judge who's never seen it.
+Task 1: Build a dashboard layout with: a top KPI row (Total Complaints, Active Incidents,
+Emerging Incidents, Auto-Escalated Incidents), an auto-escalation banner, a left-hand
+Leaflet.js map with hotspot markers (green=normal, yellow=emerging, red=high pressure),
+a right-hand 'top emerging incidents' list, and a bottom section with a trend chart
+(Recharts or Plotly) and a daily operations briefing panel.
+Task 2: Build a citizen complaint submission form (description, browser geolocation with
+manual lat/lng fallback, optional photo) that posts to POST /api/complaints and displays
+the returned complaint ID and predicted category.
+Task 3: Build an evidence panel that opens on clicking a hotspot or incident, showing:
+Incident ID, Category, Area, Reports, Baseline, Spike %, Time Window, Potentially Related
+Reports, Unresolved Reports, Cluster Radius, Pressure Score, Status, and sample complaints.
+All data must come from the real API — no hardcoded dashboard numbers, even while backend
+endpoints are still returning stub data.

@@ -1,0 +1,101 @@
+PRAMAN — PRD Addendum: Filled Gaps & Build Contracts
+Companion to Spandan_PRD.pdf. Name reverted to Praman. This addendum resolves ambiguities that would otherwise cause integration failures across the 5-person split. Read this before writing code — the schemas below are the contract between modules.
+
+1. Shared data schema (lock this first — before anyone writes a line of ML code)
+Every module reads/writes these exact shapes. Agree on this in the first 15 minutes as a team, then work independently.
+
+Complaint object (output of scripts/generate_data.py, input to everything else):
+
+{
+  "complaint_id": "C0001",
+  "complaint_text": "string",
+  "category": "Pothole | Garbage | Water Leakage | Streetlight | Sewage | Traffic Hazard",
+  "predicted_category": "string (filled by classifier.py)",
+  "confidence": 0.0,
+  "latitude": 0.0,
+  "longitude": 0.0,
+  "locality": "Area A",
+  "timestamp": "ISO 8601",
+  "status": "unresolved | resolved"
+}
+Incident cluster object (output of clustering.py, consumed by pressure.py and the backend):
+
+{
+  "incident_id": "INC001",
+  "category": "string",
+  "representative_area": "Area A",
+  "centroid_lat": 0.0,
+  "centroid_lng": 0.0,
+  "cluster_radius_km": 1.5,
+  "complaint_ids": ["C0001", "C0007", "..."],
+  "complaint_count": 12,
+  "similar_complaint_count": 9,
+  "unresolved_count": 7,
+  "first_seen": "ISO 8601",
+  "last_seen": "ISO 8601"
+}
+Incident intelligence object (output of anomaly.py + pressure.py, merged onto the cluster before it reaches the frontend):
+
+{
+  "incident_id": "INC001",
+  "baseline": 5.0,
+  "current": 24,
+  "z_score": 3.1,
+  "spike_pct": 380.0,
+  "pressure_score": 84,
+  "severity": "Normal | Emerging | High Pressure",
+  "auto_escalated": true
+}
+Nobody changes a field name without telling the other four people. If a module needs a new field, add it — don't rename an existing one.
+
+2. Similarity thresholds (Section 7)
+Use TF-IDF + cosine similarity, and fix these cutoffs:
+
+cosine ≥ 0.85 → "Potential Duplicate"
+0.55 ≤ cosine < 0.85 → "Potentially Related"
+cosine < 0.55 → unrelated, not linked
+Compute similarity only within the same predicted category and within the clustering time window (below) — comparing every complaint against every other complaint citywide is unnecessary and slow.
+
+3. Incident clustering — concrete algorithm (Section 9)
+This is the highest-risk module. Use a graph + connected-components approach — it's simple to implement in an afternoon and easy to explain to judges:
+
+Within each category, build a graph where complaints are nodes.
+Draw an edge between two complaints if all of:
+Haversine distance ≤ 2 km (configurable 1–2 km)
+Cosine similarity ≥ 0.55 ("Potentially Related" or above)
+Timestamps within a 72-hour window of each other
+Run connected-components (via networkx or a manual union-find) on this graph.
+Each connected component with ≥ 3 complaints becomes an incident cluster. Isolated complaints or pairs stay as unclustered individual reports (still visible, just not "incidents").
+Cluster centroid = mean lat/lng of member complaints. Cluster radius = max distance from centroid to any member.
+Recompute clustering on-demand (triggered by GET /api/incidents or after a POST /api/complaints) — with 500–1000 rows this runs in well under a second, so there's no need for background jobs or caching infrastructure.
+
+4. Spike detection — exact formulas (Sections 12–13)
+Baseline window: trailing 7 days, same category + same locality.
+Minimum history rule: if fewer than 5 prior days of data exist for that category/locality pair, skip spike detection for it (mark "insufficient_history": true" rather than computing a misleading z-score).
+Zero-std handling: if rolling_std == 0, set z_score = 0 if current also equals baseline, otherwise treat any nonzero increase as an automatic anomaly (z = 3, capped).
+Spike %: ((current - baseline) / baseline) * 100, and if baseline == 0: report spike_pct as "N/A (new activity)" rather than dividing by zero.
+Bands: z ≥ 3 → major spike; 2 ≤ z < 3 → anomaly/emerging; z < 2 → normal.
+5. Pressure Score — normalization (Section 14)
+All four components normalized to 0–100 before weighting:
+
+Spike Magnitude (40%): min(100, z_score / 3 * 100) — z of 3+ maxes this component out.
+Cluster Size (30%): min(100, complaint_count / 30 * 100) — cap at 30 complaints = full score (tune after seeing real synthetic data volumes).
+Duration (20%): min(100, hours_since_first_seen / 72 * 100) — an incident active 3+ days maxes out.
+Unresolved Ratio (10%): (unresolved_count / complaint_count) * 100 directly.
+pressure_score = 0.4*spike + 0.3*size + 0.2*duration + 0.1*unresolved
+
+Severity bands (Section 15) apply directly to this final score: 0–59 Normal, 60–79 Emerging, 80–100 High Pressure → auto-escalate.
+
+6. Synthetic dataset generation (Section 21)
+Use a fixed random seed (e.g., np.random.seed(42)) — the demo depends on the scripted spikes firing reliably every run, not on lucky randomness.
+Generate 500–1000 complaints over ~4–6 weeks, 6 categories, ~6–10 generic localities (Area A–J).
+For each category, write 4–6 text templates with slot variables (e.g., "Large pothole near {landmark} causing traffic slowdown") so generated text has natural variation but predictable structure for the classifier to learn.
+Seed near-duplicates deliberately: take 15–20 generated complaints and clone them with minor wording changes, same locality, close timestamps — these should trigger "Potential Duplicate."
+Script 2–3 spikes explicitly: pick a category + locality + 3-day window, and inject 4–6x the normal daily volume in that window.
+7. Team sync checkpoint (fills the gap in Team Division)
+Add one mandatory checkpoint at hour 4: every member pushes their module's output against the shared schema above using stub/sample data, even if the real logic isn't finished. This catches schema mismatches while there's still time to fix them, instead of at final assembly.
+
+Assign shared ownership of README.md + AI_USAGE_LOG.md to whoever finishes their core module first (likely Member 1 or 4) — log AI usage live throughout the day rather than reconstructing it at hour 7.
+
+8. Everything else — kept exactly as the PRD specifies
+Categories, API endpoints, tech stack, guardrail language, terminology rules, dashboard layout goals, and the MVP priority list (Section 29) are all solid as written — no changes needed there.

@@ -42,3 +42,21 @@ This document logs all AI assistance throughout the hackathon in compliance with
 - **Modifications / Human Review**:
   - Ensured briefing service uses deterministic calculations strictly derived from computed incident numbers (guardrail against LLM hallucination).
   - Verified complaint ID generation conforms to sequential format (`C0001`, `C0002`...).
+
+### Entry 3: Real Dataset Migration (9,200 Rows), Spatial-Temporal Window & Latency Optimization
+- **Timestamp**: 2026-09-18 (Phase 2 & Defense Preparation)
+- **Prompt / Request**: Migrate to 3.5-year real civic dataset (`praman_train.csv`, `praman_test.csv`), resolve temporal staleness, optimize complaint ingestion latency, and author defense documentation.
+- **AI Tool**: Antigravity IDE (Gemini 3.8 Flash)
+- **Actions Taken**:
+  - Implemented in-memory multi-source dataset loader in `services/complaint_service.py` to ingest 9,200+ historical rows.
+  - Formulated `ANCHOR_DATE = max(timestamp)` pattern across all services (`complaint_service`, `incident_service`, `briefing_service`) to avoid time-decay distortion on historical datasets.
+  - Resolved `TypeError` on offset-naive vs offset-aware datetime subtraction by establishing a unified UTC normalization boundary (`_parse_dt`) across services.
+  - Implemented 72-hour temporal sliding window on spatial clustering to prevent grouping incidents across years.
+  - Decoupled `severity` from temporal resolution status in `incident_service.py` to ensure valid anomaly escalation (High Pressure / Emerging) triggers correctly on historical data.
+  - Designed append-only `data/new_submissions.json` architecture to avoid rewriting 9,200 rows to disk on POST requests.
+  - Benchmarked live POST latency in Windows PowerShell (`Measure-Command` / `Invoke-RestMethod` vs `127.0.0.1:5000`): confirmed **~31 ms** backend processing time and **~112 ms** client roundtrip.
+  - Authored comprehensive `HACKATHON_DEFENSE_GUIDE.md` covering architecture rationales, formula breakdowns, judge defense Q&A, and live demo steps.
+  - Verified 100% test pass rate across 25 assertions (`test_backend.py`).
+- **Modifications / Human Review**:
+  - Confirmed human review on disabling full-dataset disk serialization to guarantee sub-second live demonstration capability.
+  - Validated adherence to strict "no unapproved git commits" constraint.

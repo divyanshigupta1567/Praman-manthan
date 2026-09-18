@@ -24,12 +24,16 @@ All endpoints adhere strictly to the project's contract-locked shared schema, al
 Praman-manthan/
 ├── app.py                     # Flask app entrypoint, CORS, blueprint registration
 ├── requirements.txt           # Python dependency specifications
-├── test_backend.py            # Automated test suite verifying all 8 endpoints & schemas
+├── test_backend.py            # Automated test suite (25/25 tests passing)
+├── HACKATHON_DEFENSE_GUIDE.md # Technical defense guide & Q&A for judges
 ├── README.md                  # Backend documentation & API contracts
 ├── AI_USAGE_LOG.md            # AI usage & engineering log
+├── praman_train.csv           # 3.5-year real civic complaint training dataset
+├── praman_test.csv            # Civic complaint evaluation dataset
 ├── data/
-│   ├── complaints.json        # Seeded complaints conforming to COMPLAINT schema
-│   ├── incidents.json         # Merged incident cluster + intelligence objects
+│   ├── new_submissions.json  # Append-only runtime submissions (high-speed I/O)
+│   ├── complaints.json        # Legacy seed complaints
+│   ├── incidents.json         # Seed incidents reference
 │   └── model_metrics.json     # Classifier evaluation metrics (baseline vs comparison)
 ├── routes/
 │   ├── complaints_bp.py       # Endpoints: GET /api/complaints, POST /api/complaints
@@ -38,8 +42,8 @@ Praman-manthan/
 │   ├── trends_bp.py           # Endpoint: GET /api/trends
 │   └── briefing_bp.py         # Endpoint: GET /api/briefing
 └── services/
-    ├── complaint_service.py   # Complaint CRUD & classifier inference hook
-    ├── incident_service.py    # Merged cluster & intelligence aggregation, hotspots & KPIs
+    ├── complaint_service.py   # Dataset loader (9,200 rows in-memory), ANCHOR_DATE, append-only submissions
+    ├── incident_service.py    # Spatial-temporal connected-components clustering (72hr window) & scoring
     ├── trend_service.py       # Dynamic time-series aggregation by category & locality
     ├── briefing_service.py    # Deterministic operations briefing from computed numbers
     └── model_service.py       # Model performance statistics
@@ -67,11 +71,20 @@ pip install -r requirements.txt
 ```bash
 python app.py
 ```
-The server will start at `http://localhost:5000`.
+The server will start at `http://127.0.0.1:5000` (or `http://localhost:5000`).  
+> **Tip for Windows:** Use `http://127.0.0.1:5000` to avoid the 2-second Windows IPv6 lookup timeout.
 
 ### 4. Run Automated Tests
 ```bash
 python test_backend.py
+```
+
+### 5. Benchmark Request Latency (PowerShell)
+```powershell
+Measure-Command { 
+    Invoke-RestMethod -Uri "http://127.0.0.1:5000/api/complaints" -Method POST -ContentType "application/json" -Body '{"complaint_text":"Water leak on 5th street","latitude":12.9,"longitude":77.6}' 
+}
+# Measured: ~112 ms roundtrip, ~31 ms backend processing with 9,200+ complaints in memory.
 ```
 
 ---

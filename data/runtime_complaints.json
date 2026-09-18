@@ -9622,5 +9622,77 @@
     "locality": "Area A",
     "timestamp": "2026-09-18T03:52:36.603317Z",
     "status": "unresolved"
+  },
+  {
+    "complaint_id": "PRM-1803",
+    "complaint_text": "Massive overflow of garbage at market street causing bad odor",
+    "category": "Garbage",
+    "predicted_category": "Garbage",
+    "confidence": 0.9,
+    "latitude": 12.973,
+    "longitude": 77.596,
+    "locality": "Area A",
+    "timestamp": "2026-09-18T04:15:30.718665Z",
+    "status": "unresolved"
+  },
+  {
+    "complaint_id": "PRM-1804",
+    "complaint_text": "Severe underground main pipeline ruptured and gushing water across the roadway",
+    "category": "Pothole",
+    "predicted_category": "Pothole",
+    "confidence": 0.92,
+    "latitude": 13.001,
+    "longitude": 77.568,
+    "locality": "Area E",
+    "timestamp": "2026-09-18T04:15:42.643479Z",
+    "status": "unresolved"
+  },
+  {
+    "complaint_id": "PRM-1805",
+    "complaint_text": "Massive overflow of garbage at market street causing bad odor",
+    "category": "Garbage",
+    "predicted_category": "Garbage",
+    "confidence": 0.9,
+    "latitude": 12.973,
+    "longitude": 77.596,
+    "locality": "Area A",
+    "timestamp": "2026-09-18T04:16:18.875234Z",
+    "status": "unresolved"
+  },
+  {
+    "complaint_id": "PRM-1806",
+    "complaint_text": "Severe underground main pipeline ruptured and gushing water across the roadway",
+    "category": "Water Leakage",
+    "predicted_category": "Water Leakage",
+    "confidence": 0.96,
+    "latitude": 13.001,
+    "longitude": 77.568,
+    "locality": "Area E",
+    "timestamp": "2026-09-18T04:16:24.798190Z",
+    "status": "unresolved"
+  },
+  {
+    "complaint_id": "PRM-1807",
+    "complaint_text": "Massive overflow of garbage at market street causing bad odor",
+    "category": "Garbage",
+    "predicted_category": "Garbage",
+    "confidence": 0.9,
+    "latitude": 12.973,
+    "longitude": 77.596,
+    "locality": "Area A",
+    "timestamp": "2026-09-18T04:16:39.674561Z",
+    "status": "unresolved"
+  },
+  {
+    "complaint_id": "PRM-1808",
+    "complaint_text": "Massive overflow of garbage at market street causing bad odor",
+    "category": "Garbage",
+    "predicted_category": "Garbage",
+    "confidence": 0.9,
+    "latitude": 12.973,
+    "longitude": 77.596,
+    "locality": "Area A",
+    "timestamp": "2026-09-18T04:17:01.475336Z",
+    "status": "unresolved"
   }
 ]

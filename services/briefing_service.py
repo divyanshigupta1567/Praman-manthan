@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from services.incident_service import get_all_incidents, get_kpi_metrics
+from services.complaint_service import get_anchor_date
 
 
 def generate_operations_briefing():
@@ -17,7 +18,11 @@ def generate_operations_briefing():
     high_pressure.sort(key=lambda x: x.get("pressure_score", 0), reverse=True)
     emerging.sort(key=lambda x: x.get("pressure_score", 0), reverse=True)
 
-    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    anchor_str = get_anchor_date()
+    try:
+        today_str = datetime.fromisoformat(anchor_str.replace("Z", "+00:00")).strftime("%Y-%m-%d")
+    except:
+        today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     # Construct deterministic summary narrative
     bullet_points = []

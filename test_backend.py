@@ -58,7 +58,12 @@ def run_tests():
     res = client.get(f"/api/incidents/{inc_id}")
     assert_test(f"GET /api/incidents/{inc_id} returns 200", res.status_code == 200)
     inc_detail = res.get_json()
-    assert_test("Incident details contains complaints list", "complaints" in inc_detail)
+    assert_test("Incident details contains non-empty complaints list",
+                "complaints" in inc_detail and len(inc_detail["complaints"]) > 0)
+    if inc_detail.get("complaints"):
+        assert_test("Member complaint contains complaint_text and id",
+                    "complaint_text" in inc_detail["complaints"][0] and "complaint_id" in inc_detail["complaints"][0])
+
 
     # 5. GET /api/metrics
     res = client.get("/api/metrics")

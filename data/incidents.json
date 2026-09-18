@@ -1,0 +1,767 @@
+[
+  {
+    "incident_id": "INC-GARBAGE-001",
+    "category": "Garbage",
+    "centroid_lat": 13.048165,
+    "centroid_lng": 77.569436,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 15,
+    "similar_complaint_count": 15,
+    "unresolved_count": 14,
+    "first_seen": "2020-03-13T15:16:00",
+    "last_seen": "2020-03-16T15:09:00",
+    "complaint_ids": [
+      "C008934",
+      "C008935",
+      "C008936",
+      "C008937",
+      "C008938",
+      "C008939",
+      "C008940",
+      "C008941",
+      "C008980",
+      "C008981",
+      "C008982",
+      "C008983",
+      "C008984",
+      "C008985",
+      "C008987"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-001",
+    "category": "Pothole",
+    "centroid_lat": 12.924637,
+    "centroid_lng": 77.593322,
+    "cluster_radius_km": 2.046,
+    "complaint_count": 13,
+    "similar_complaint_count": 13,
+    "unresolved_count": 2,
+    "first_seen": "2019-01-27T12:48:00",
+    "last_seen": "2019-01-27T19:35:00",
+    "complaint_ids": [
+      "C000370",
+      "C000371",
+      "C000376",
+      "C000377",
+      "C000378",
+      "C000379",
+      "C000380",
+      "C000381",
+      "C000382",
+      "C000383",
+      "C000384",
+      "C000385",
+      "C000386"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-002",
+    "category": "Garbage",
+    "centroid_lat": 12.93706,
+    "centroid_lng": 77.585739,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 7,
+    "similar_complaint_count": 7,
+    "unresolved_count": 6,
+    "first_seen": "2020-10-26T12:56:00",
+    "last_seen": "2020-10-26T13:00:00",
+    "complaint_ids": [
+      "C010770",
+      "C010771",
+      "C010772",
+      "C010773",
+      "C010774",
+      "C010775",
+      "C010776"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-002",
+    "category": "Pothole",
+    "centroid_lat": 12.976648,
+    "centroid_lng": 77.603552,
+    "cluster_radius_km": 0.889,
+    "complaint_count": 7,
+    "similar_complaint_count": 7,
+    "unresolved_count": 7,
+    "first_seen": "2021-01-08T18:27:00",
+    "last_seen": "2021-01-08T18:51:00",
+    "complaint_ids": [
+      "C012154",
+      "C012155",
+      "C012156",
+      "C012157",
+      "C012158",
+      "C012159",
+      "C012160"
+    ]
+  },
+  {
+    "incident_id": "INC-STREETLIGHT-001",
+    "category": "Streetlight",
+    "centroid_lat": 13.032708,
+    "centroid_lng": 77.564555,
+    "cluster_radius_km": 0.184,
+    "complaint_count": 6,
+    "similar_complaint_count": 6,
+    "unresolved_count": 0,
+    "first_seen": "2019-03-28T10:30:00",
+    "last_seen": "2019-03-28T11:07:00",
+    "complaint_ids": [
+      "C001414",
+      "C001415",
+      "C001416",
+      "C001417",
+      "C001418",
+      "C001419"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-003",
+    "category": "Garbage",
+    "centroid_lat": 12.98068,
+    "centroid_lng": 77.751155,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 6,
+    "similar_complaint_count": 0,
+    "unresolved_count": 1,
+    "first_seen": "2019-08-30T11:39:00",
+    "last_seen": "2019-08-30T11:45:00",
+    "complaint_ids": [
+      "C004548",
+      "C004549",
+      "C004550",
+      "C004552",
+      "C004553",
+      "C004554"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-004",
+    "category": "Garbage",
+    "centroid_lat": 12.978643,
+    "centroid_lng": 77.618757,
+    "cluster_radius_km": 0.637,
+    "complaint_count": 6,
+    "similar_complaint_count": 6,
+    "unresolved_count": 5,
+    "first_seen": "2019-11-11T11:28:00",
+    "last_seen": "2019-11-13T16:45:00",
+    "complaint_ids": [
+      "C006417",
+      "C006418",
+      "C006426",
+      "C006427",
+      "C006428",
+      "C006479"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-001",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.958393,
+    "centroid_lng": 77.700784,
+    "cluster_radius_km": 0.869,
+    "complaint_count": 6,
+    "similar_complaint_count": 0,
+    "unresolved_count": 6,
+    "first_seen": "2022-01-21T22:36:00",
+    "last_seen": "2022-01-21T22:48:00",
+    "complaint_ids": [
+      "C014652",
+      "C014653",
+      "C014654",
+      "C014655",
+      "C014656",
+      "C014659"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-002",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.96761,
+    "centroid_lng": 77.713861,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 5,
+    "similar_complaint_count": 5,
+    "unresolved_count": 5,
+    "first_seen": "2019-08-20T10:52:00",
+    "last_seen": "2019-08-20T11:04:00",
+    "complaint_ids": [
+      "C004264",
+      "C004265",
+      "C004266",
+      "C004267",
+      "C004270"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-003",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.92483,
+    "centroid_lng": 77.67286,
+    "cluster_radius_km": 1.196,
+    "complaint_count": 5,
+    "similar_complaint_count": 2,
+    "unresolved_count": 5,
+    "first_seen": "2021-12-16T14:29:00",
+    "last_seen": "2021-12-16T15:27:00",
+    "complaint_ids": [
+      "C014449",
+      "C014451",
+      "C014452",
+      "C014453",
+      "C014454"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-003",
+    "category": "Pothole",
+    "centroid_lat": 12.965989,
+    "centroid_lng": 77.573597,
+    "cluster_radius_km": 0.497,
+    "complaint_count": 4,
+    "similar_complaint_count": 4,
+    "unresolved_count": 1,
+    "first_seen": "2019-01-17T10:37:00",
+    "last_seen": "2019-01-19T13:11:00",
+    "complaint_ids": [
+      "C000243",
+      "C000244",
+      "C000245",
+      "C000269"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-004",
+    "category": "Pothole",
+    "centroid_lat": 12.983988,
+    "centroid_lng": 77.674561,
+    "cluster_radius_km": 0.628,
+    "complaint_count": 4,
+    "similar_complaint_count": 4,
+    "unresolved_count": 3,
+    "first_seen": "2019-06-16T12:14:00",
+    "last_seen": "2019-06-16T12:30:00",
+    "complaint_ids": [
+      "C002907",
+      "C002908",
+      "C002910",
+      "C002912"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-005",
+    "category": "Garbage",
+    "centroid_lat": 13.009892,
+    "centroid_lng": 77.548059,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 4,
+    "similar_complaint_count": 4,
+    "unresolved_count": 4,
+    "first_seen": "2019-06-20T12:52:00",
+    "last_seen": "2019-06-20T12:55:00",
+    "complaint_ids": [
+      "C003018",
+      "C003019",
+      "C003020",
+      "C003021"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-006",
+    "category": "Garbage",
+    "centroid_lat": 12.988314,
+    "centroid_lng": 77.593747,
+    "cluster_radius_km": 0.32,
+    "complaint_count": 4,
+    "similar_complaint_count": 4,
+    "unresolved_count": 4,
+    "first_seen": "2020-04-17T08:31:00",
+    "last_seen": "2020-04-17T09:49:00",
+    "complaint_ids": [
+      "C009274",
+      "C009275",
+      "C009276",
+      "C009277"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-005",
+    "category": "Pothole",
+    "centroid_lat": 12.868132,
+    "centroid_lng": 77.652383,
+    "cluster_radius_km": 0.062,
+    "complaint_count": 4,
+    "similar_complaint_count": 4,
+    "unresolved_count": 4,
+    "first_seen": "2022-01-01T13:15:00",
+    "last_seen": "2022-01-01T13:17:00",
+    "complaint_ids": [
+      "C014522",
+      "C014523",
+      "C014524",
+      "C014525"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-006",
+    "category": "Pothole",
+    "centroid_lat": 12.871764,
+    "centroid_lng": 77.616558,
+    "cluster_radius_km": 0.161,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 0,
+    "first_seen": "2019-01-25T11:19:00",
+    "last_seen": "2019-01-25T11:20:00",
+    "complaint_ids": [
+      "C000346",
+      "C000347",
+      "C000348"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-007",
+    "category": "Pothole",
+    "centroid_lat": 12.874492,
+    "centroid_lng": 77.616824,
+    "cluster_radius_km": 0.045,
+    "complaint_count": 3,
+    "similar_complaint_count": 2,
+    "unresolved_count": 3,
+    "first_seen": "2019-02-27T19:14:00",
+    "last_seen": "2019-02-27T19:15:00",
+    "complaint_ids": [
+      "C000888",
+      "C000889",
+      "C000890"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-004",
+    "category": "Traffic Hazard",
+    "centroid_lat": 13.02473,
+    "centroid_lng": 77.594731,
+    "cluster_radius_km": 0.003,
+    "complaint_count": 3,
+    "similar_complaint_count": 0,
+    "unresolved_count": 3,
+    "first_seen": "2019-07-30T18:18:00",
+    "last_seen": "2019-07-30T18:29:00",
+    "complaint_ids": [
+      "C003792",
+      "C003793",
+      "C003794"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-005",
+    "category": "Traffic Hazard",
+    "centroid_lat": 13.023548,
+    "centroid_lng": 77.592283,
+    "cluster_radius_km": 0.041,
+    "complaint_count": 3,
+    "similar_complaint_count": 0,
+    "unresolved_count": 3,
+    "first_seen": "2019-07-30T18:44:00",
+    "last_seen": "2019-07-30T19:00:00",
+    "complaint_ids": [
+      "C003796",
+      "C003798",
+      "C003799"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-006",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.936784,
+    "centroid_lng": 77.626627,
+    "cluster_radius_km": 0.046,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2019-08-02T15:38:00",
+    "last_seen": "2019-08-02T15:44:00",
+    "complaint_ids": [
+      "C003877",
+      "C003878",
+      "C003879"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-007",
+    "category": "Garbage",
+    "centroid_lat": 12.960942,
+    "centroid_lng": 77.58019,
+    "cluster_radius_km": 0.01,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 0,
+    "first_seen": "2019-10-01T15:29:00",
+    "last_seen": "2019-10-01T15:29:00",
+    "complaint_ids": [
+      "C005276",
+      "C005277",
+      "C005278"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-008",
+    "category": "Garbage",
+    "centroid_lat": 12.992004,
+    "centroid_lng": 77.594334,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2019-10-13T18:55:00",
+    "last_seen": "2019-10-13T18:56:00",
+    "complaint_ids": [
+      "C005638",
+      "C005639",
+      "C005640"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-008",
+    "category": "Pothole",
+    "centroid_lat": 12.992004,
+    "centroid_lng": 77.594334,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2019-10-15T11:23:00",
+    "last_seen": "2019-10-17T16:40:00",
+    "complaint_ids": [
+      "C005704",
+      "C005708",
+      "C005788"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-009",
+    "category": "Garbage",
+    "centroid_lat": 13.073007,
+    "centroid_lng": 77.599824,
+    "cluster_radius_km": 0.168,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 0,
+    "first_seen": "2019-10-16T07:04:00",
+    "last_seen": "2019-10-16T07:09:00",
+    "complaint_ids": [
+      "C005732",
+      "C005733",
+      "C005735"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-010",
+    "category": "Garbage",
+    "centroid_lat": 13.022696,
+    "centroid_lng": 77.647036,
+    "cluster_radius_km": 0.036,
+    "complaint_count": 3,
+    "similar_complaint_count": 2,
+    "unresolved_count": 0,
+    "first_seen": "2019-10-24T09:37:00",
+    "last_seen": "2019-10-25T08:44:00",
+    "complaint_ids": [
+      "C005967",
+      "C005968",
+      "C005993"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-011",
+    "category": "Garbage",
+    "centroid_lat": 12.97969,
+    "centroid_lng": 77.619234,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 2,
+    "first_seen": "2019-11-05T12:03:00",
+    "last_seen": "2019-11-05T16:16:00",
+    "complaint_ids": [
+      "C006214",
+      "C006218",
+      "C006219"
+    ]
+  },
+  {
+    "incident_id": "INC-STREETLIGHT-002",
+    "category": "Streetlight",
+    "centroid_lat": 12.839678,
+    "centroid_lng": 77.64673,
+    "cluster_radius_km": 0.161,
+    "complaint_count": 3,
+    "similar_complaint_count": 2,
+    "unresolved_count": 3,
+    "first_seen": "2020-01-23T05:09:00",
+    "last_seen": "2020-01-23T05:30:00",
+    "complaint_ids": [
+      "C007783",
+      "C007784",
+      "C007785"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-007",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.957342,
+    "centroid_lng": 77.569458,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 2,
+    "unresolved_count": 3,
+    "first_seen": "2020-02-14T17:04:00",
+    "last_seen": "2020-02-14T17:09:00",
+    "complaint_ids": [
+      "C008256",
+      "C008257",
+      "C008258"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-012",
+    "category": "Garbage",
+    "centroid_lat": 12.989619,
+    "centroid_lng": 77.592795,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2020-03-06T17:24:00",
+    "last_seen": "2020-03-06T17:27:00",
+    "complaint_ids": [
+      "C008732",
+      "C008733",
+      "C008734"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-013",
+    "category": "Garbage",
+    "centroid_lat": 12.901461,
+    "centroid_lng": 77.562576,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2020-10-26T11:24:00",
+    "last_seen": "2020-10-26T11:25:00",
+    "complaint_ids": [
+      "C010762",
+      "C010763",
+      "C010764"
+    ]
+  },
+  {
+    "incident_id": "INC-POTHOLE-009",
+    "category": "Pothole",
+    "centroid_lat": 13.076752,
+    "centroid_lng": 77.527258,
+    "cluster_radius_km": 0.014,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-01-02T07:39:00",
+    "last_seen": "2021-01-02T07:51:00",
+    "complaint_ids": [
+      "C011916",
+      "C011917",
+      "C011918"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-008",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.970011,
+    "centroid_lng": 77.639909,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-07-10T08:07:00",
+    "last_seen": "2021-07-10T08:09:00",
+    "complaint_ids": [
+      "C013389",
+      "C013390",
+      "C013391"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-009",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.996785,
+    "centroid_lng": 77.629111,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-07-23T00:00:00",
+    "last_seen": "2021-07-23T00:02:00",
+    "complaint_ids": [
+      "C013486",
+      "C013487",
+      "C013488"
+    ]
+  },
+  {
+    "incident_id": "INC-STREETLIGHT-003",
+    "category": "Streetlight",
+    "centroid_lat": 13.006028,
+    "centroid_lng": 77.640024,
+    "cluster_radius_km": 0.015,
+    "complaint_count": 3,
+    "similar_complaint_count": 0,
+    "unresolved_count": 1,
+    "first_seen": "2021-12-05T12:51:00",
+    "last_seen": "2021-12-05T13:19:00",
+    "complaint_ids": [
+      "C014376",
+      "C014377",
+      "C014378"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-014",
+    "category": "Garbage",
+    "centroid_lat": 13.058843,
+    "centroid_lng": 77.551522,
+    "cluster_radius_km": 0.104,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-12-08T06:47:00",
+    "last_seen": "2021-12-10T07:49:00",
+    "complaint_ids": [
+      "C014401",
+      "C014402",
+      "C014416"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-015",
+    "category": "Garbage",
+    "centroid_lat": 13.084818,
+    "centroid_lng": 77.552547,
+    "cluster_radius_km": 0.532,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-12-11T06:47:00",
+    "last_seen": "2021-12-11T06:58:00",
+    "complaint_ids": [
+      "C014421",
+      "C014424",
+      "C014425"
+    ]
+  },
+  {
+    "incident_id": "INC-GARBAGE-016",
+    "category": "Garbage",
+    "centroid_lat": 13.081576,
+    "centroid_lng": 77.56011,
+    "cluster_radius_km": 0.992,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-12-11T06:48:00",
+    "last_seen": "2021-12-13T05:43:00",
+    "complaint_ids": [
+      "C014423",
+      "C014437",
+      "C014438"
+    ]
+  },
+  {
+    "incident_id": "INC-SEWAGE-001",
+    "category": "Sewage",
+    "centroid_lat": 13.086734,
+    "centroid_lng": 77.55414,
+    "cluster_radius_km": 0.576,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2021-12-11T06:48:00",
+    "last_seen": "2021-12-11T06:59:00",
+    "complaint_ids": [
+      "C014422",
+      "C014426",
+      "C014427"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-010",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.995379,
+    "centroid_lng": 77.683984,
+    "cluster_radius_km": 0.115,
+    "complaint_count": 3,
+    "similar_complaint_count": 0,
+    "unresolved_count": 3,
+    "first_seen": "2022-01-21T22:31:00",
+    "last_seen": "2022-01-21T22:34:00",
+    "complaint_ids": [
+      "C014649",
+      "C014650",
+      "C014651"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-011",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.887064,
+    "centroid_lng": 77.543312,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 0,
+    "unresolved_count": 0,
+    "first_seen": "2022-03-08T13:21:00",
+    "last_seen": "2022-03-09T17:16:00",
+    "complaint_ids": [
+      "C014992",
+      "C015001",
+      "C015023"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-012",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.979889,
+    "centroid_lng": 77.547843,
+    "cluster_radius_km": 0.001,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 3,
+    "first_seen": "2022-04-18T10:19:00",
+    "last_seen": "2022-04-18T10:20:00",
+    "complaint_ids": [
+      "C015304",
+      "C015305",
+      "C015306"
+    ]
+  },
+  {
+    "incident_id": "INC-TRAFFICHAZARD-013",
+    "category": "Traffic Hazard",
+    "centroid_lat": 12.904942,
+    "centroid_lng": 77.521057,
+    "cluster_radius_km": 0.0,
+    "complaint_count": 3,
+    "similar_complaint_count": 3,
+    "unresolved_count": 2,
+    "first_seen": "2022-07-01T16:41:00",
+    "last_seen": "2022-07-01T16:48:00",
+    "complaint_ids": [
+      "C015867",
+      "C015868",
+      "C015869"
+    ]
+  }
+]

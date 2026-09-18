@@ -1,0 +1,37 @@
+[
+  {
+    "incident_id": "INC-GARBAGE-001",
+    "category": "Garbage",
+    "centroid_lat": 28.613925,
+    "centroid_lng": 77.209475,
+    "cluster_radius_km": 0.101,
+    "complaint_count": 4,
+    "similar_complaint_count": 4,
+    "unresolved_count": 4,
+    "first_seen": "2026-03-01T09:00:00",
+    "last_seen": "2026-03-02T19:00:00",
+    "complaint_ids": [
+      "CMP-001",
+      "CMP-002",
+      "CMP-003",
+      "CMP-012"
+    ]
+  },
+  {
+    "incident_id": "INC-WATER-001",
+    "category": "Water",
+    "centroid_lat": 28.640333,
+    "centroid_lng": 77.2192,
+    "cluster_radius_km": 0.106,
+    "complaint_count": 3,
+    "similar_complaint_count": 2,
+    "unresolved_count": 3,
+    "first_seen": "2026-02-20T08:00:00",
+    "last_seen": "2026-02-21T09:00:00",
+    "complaint_ids": [
+      "CMP-005",
+      "CMP-006",
+      "CMP-007"
+    ]
+  }
+]

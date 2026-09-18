@@ -1,0 +1,15 @@
+# requirements.txt
+# Praman - incident-clustering module (Python 3.10+)
+#
+# Pinned to a mutually compatible, widely available set. The code was also
+# verified to run clean on the newer set noted beside each line, so bumping is
+# safe if a teammate's environment already has those.
+
+pandas==2.2.3            # verified working on 3.0.2
+numpy==1.26.4            # verified working on 2.4.4
+scikit-learn==1.5.2      # verified working on 1.8.0
+networkx==3.4.2          # verified working on 3.6.1
+scipy==1.13.1            # transitive scikit-learn dependency, pinned for reproducibility
+
+# Development / test only
+pytest==8.3.3
